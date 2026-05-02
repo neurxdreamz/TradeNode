@@ -1,12 +1,50 @@
 ﻿<Window x:Class="TradeNode.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TradeNode"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Авито Аналитика - MVVM" Height="450" Width="400">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Ввод данных. UpdateSourceTrigger=PropertyChanged обновляет свойство при каждом нажатии клавиши -->
+        <TextBlock Text="Цена продажи (₽):" Grid.Row="0" Grid.Column="0" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" VerticalAlignment="Center"/>
+
+        <TextBlock Text="Себестоимость 1 шт (₽):" Grid.Row="1" Grid.Column="0" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Cost, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" VerticalAlignment="Center"/>
+
+        <TextBlock Text="Количество продаж:" Grid.Row="2" Grid.Column="0" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" VerticalAlignment="Center"/>
+
+        <TextBlock Text="Комиссия Авито (%):" Grid.Row="3" Grid.Column="0" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Commission, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" VerticalAlignment="Center"/>
+
+        <TextBlock Text="Затраты на продвижение (₽):" Grid.Row="4" Grid.Column="0" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding AdsCost, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10" VerticalAlignment="Center"/>
+
+        <!-- Кнопка привязана к команде -->
+        <Button Content="Рассчитать" Command="{Binding CalculateCommand}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,20" Padding="5"/>
+
+        <!-- Вывод результатов. Используем StringFormat для красивого отображения валюты и процентов -->
+        <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Background="#FFF0F0F0" Padding="10">
+            <StackPanel>
+                <TextBlock Text="{Binding Turnover, StringFormat='Оборот: {0:N2} ₽'}" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding TotalExpenses, StringFormat='Общие расходы: {0:N2} ₽'}" Foreground="DarkRed" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding NetProfit, StringFormat='Чистая прибыль: {0:N2} ₽'}" Foreground="DarkGreen" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding Margin, StringFormat='Маржинальность: {0:N2} %'}" Margin="0,0,0,0"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
